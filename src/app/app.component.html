@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="header">
+    <img src="../assets/white-full-logo.svg">
+    <h1>Rewards Calculator</h1>
+  </div>
+
+  <div class="main">
+    <div class="main__content">
+      <div class="pool">
+        <label>PRIZE POOL 1</label>
+        <input [(ngModel)]="pool1" type="number" min="0" placeholder="Enter Pool 1 points">
+      </div>
+      <div class="pool">
+        <label>PRIZE POOL 2</label>
+        <input [(ngModel)]="pool2" type="number" min="0" placeholder="Enter Pool 2 points">
+      </div>
+      <div class="pool">
+        <label>PRIZE POOL 3 (include Phase 1)</label>
+        <input [(ngModel)]="pool3" type="number" min="0" placeholder="Enter Pool 3 points">
+      </div>
+      <button class="calculate" (click)="calculate()">CALCULATE REWARDS</button>
+      <div class="results">
+        <h2>RESULTS:</h2>
+        <div>YOUR REWARDS: {{result}}$IRON</div>
+        <div class="meme-container">
+          <div [class]="memeClass"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Copyright 2022 Anonymous. All rights reserved.
+  </div>
+</div>
