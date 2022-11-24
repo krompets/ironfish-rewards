@@ -13,18 +13,23 @@ export class AppService {
   ) { }
 
   infoByGraffiti(graffiti: string): any {
+    const encodedGraffiti = encodeURIComponent(graffiti);
+    const encoded = encodeURIComponent(`https://api.ironfish.network/users/find?graffiti=${encodedGraffiti}`);
+
     return this.http.get(
-      'https://api.allorigins.win/raw?url=https://api.ironfish.network/users/find?graffiti=' + graffiti)
+      `https://api.allorigins.win/raw?url=${encoded}`)
       .toPromise();
   }
 
   infoPhase1(id: string): any {
+    const salt = (new Date()).getTime();
     return this.http.get(
-      'https://api.allorigins.win/raw?url=https://phase1.api.ironfish.network/users/'+ id + '/metrics?granularity=lifetime').toPromise();
+      'https://api.allorigins.win/raw?url=https://phase1.api.ironfish.network/users/'+ id + '/metrics?granularity=lifetime'+ `&${salt}`).toPromise();
   }
 
   infoPhase2(id: string): any {
+    const salt = (new Date()).getTime();
     return this.http.get(
-      'https://api.allorigins.win/raw?url=https://api.ironfish.network/users/'+ id + '/metrics?granularity=lifetime').toPromise();
+      'https://api.allorigins.win/raw?url=https://api.ironfish.network/users/'+ id + '/metrics?granularity=lifetime'+ `&${salt}`).toPromise();
   }
 }

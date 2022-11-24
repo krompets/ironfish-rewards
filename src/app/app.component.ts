@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { AppService } from './app.service';
 
 export const POOL1_POINTS = 11775030;
-export const POOL2_POINTS = 58031819
-export const POOL3_POINTS = 50000;
+export const POOL2_POINTS = 78167819;
+export const POOL3_POINTS = 30100 + 24750;  // Phase1 + Phase2
 export const POOL1_REWARDS = 420000;
 export const POOL2_REWARDS = 210000;
 export const POOL3_REWARDS = 105000;
@@ -41,7 +41,7 @@ export class AppComponent {
     const id = await this.getUserId(graffiti);
     this.phase1Rewards = await this.getPhase1Rewards(id);
     this.phase2Rewards = await this.getPhase2Rewards(id);
-    this.result = this.phase1Rewards + this.phase2Rewards;
+    this.result = +(+this.phase1Rewards + this.phase2Rewards).toFixed(2);
     this.setMemClass();
   }
 
@@ -64,7 +64,7 @@ export class AppComponent {
         data.metrics.community_contributions.points +
         data.metrics.social_media_contributions.points
       ) * POOL1_MULTIPLIER + data.metrics.pull_requests_merged.points * POOL3_MULTIPLIER;
-      return total;
+      return +total.toFixed(2);
     }
     catch (e) {
       return 0;
@@ -75,8 +75,12 @@ export class AppComponent {
     let total = 0;
     try {
       const data = await this.service.infoPhase2(id);
-      total = +data.pools.main.points * POOL2_MULTIPLIER + data.pools.code.points * POOL3_MULTIPLIER;
-      return total;
+      total = (
+        +data.metrics.node_uptime.points +
+        data.metrics.send_transaction.points +
+        data.metrics.bugs_caught.points
+      ) * POOL2_MULTIPLIER + data.metrics.pull_requests_merged.points * POOL3_MULTIPLIER;
+      return +total.toFixed(2);
     }
     catch (e) {
       return 0;
