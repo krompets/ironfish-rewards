@@ -1,10 +1,11 @@
 
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
+import { NgxLoader } from 'ngx-http-loader';
 
 export const POOL1_POINTS = 11775030;
-export const POOL2_POINTS = 78167819;
-export const POOL3_POINTS = 30100 + 24750;  // Phase1 + Phase2
+export const POOL2_POINTS = 78436151;
+export const POOL3_POINTS = 30100 + 26000;  // Phase1 + Phase2
 export const POOL1_REWARDS = 420000;
 export const POOL2_REWARDS = 210000;
 export const POOL3_REWARDS = 105000;
@@ -19,6 +20,8 @@ export const POOL3_MULTIPLIER = POOL3_REWARDS/POOL3_POINTS;
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
+  public loader = NgxLoader;
+
   phase1Rewards = 0;
   phase2Rewards = 0;
   result = 0;

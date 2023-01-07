@@ -5,31 +5,47 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AppService {
-  API1 = 'https://phase1.api.ironfish.network';
-  API2 = 'https://api.ironfish.network';
-  API = 'https://api.allorigins.win/'
+  REQUEST_HANDLER = '/api/request.php';
+
   constructor(
     private http: HttpClient
   ) { }
 
   infoByGraffiti(graffiti: string): any {
     const encodedGraffiti = encodeURIComponent(graffiti);
-    const encoded = encodeURIComponent(`https://api.ironfish.network/users/find?graffiti=${encodedGraffiti}`);
-
     return this.http.get(
-      `https://api.allorigins.win/raw?url=${encoded}`)
+      this.REQUEST_HANDLER, {
+        params: {
+          request_url: `https://api.ironfish.network/users/find?graffiti=${encodedGraffiti}`
+        }
+      })
       .toPromise();
   }
 
   infoPhase1(id: string): any {
-    const salt = (new Date()).getTime();
     return this.http.get(
-      'https://api.allorigins.win/raw?url=https://phase1.api.ironfish.network/users/'+ id + '/metrics?granularity=lifetime'+ `&${salt}`).toPromise();
+      this.REQUEST_HANDLER, {
+        params: {
+          request_url: `https://phase1.api.ironfish.network/users/${id}/metrics?granularity=lifetime`
+        }
+      }).toPromise();
   }
 
   infoPhase2(id: string): any {
-    const salt = (new Date()).getTime();
     return this.http.get(
-      'https://api.allorigins.win/raw?url=https://api.ironfish.network/users/'+ id + '/metrics?granularity=lifetime'+ `&${salt}`).toPromise();
+      this.REQUEST_HANDLER, {
+        params: {
+          request_url: `https://phase2.api.ironfish.network/users/${id}/metrics?granularity=lifetime`
+        }
+      }).toPromise();
+  }
+
+  infoPhase3(id: string): any {
+    return this.http.get(
+      this.REQUEST_HANDLER, {
+        params: {
+          request_url: `https://api.ironfish.network/users/${id}/metrics?granularity=lifetime`
+        }
+      }).toPromise();
   }
 }
